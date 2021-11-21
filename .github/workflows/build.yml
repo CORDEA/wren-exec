@@ -2,10 +2,10 @@ name: Build
 
 on:
   workflow_dispatch:
-  # issues:
-  #   types:
-  #     - opened
-  #     - edited
+  issues:
+    types:
+      - opened
+      - edited
 
 jobs:
   build:
