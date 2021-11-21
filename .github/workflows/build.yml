@@ -22,7 +22,8 @@ jobs:
           unzip wren.zip
           mv "wren-cli-linux-$VERSION/wren_cli" ./
           chmod u+x wren_cli
-          ./wren_cli main.wren > result
+          echo "::set-output name=value::$(./wren_cli main.wren)"
+        id: result
       - uses: actions/github-script@v5
         with:
           script: |
@@ -30,5 +31,6 @@ jobs:
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: ""
+                body: "Result: \n\n```\n${{ steps.result.outputs.value }}```\n"
               })
+        if: ${{ steps.result.outputs.value }}
