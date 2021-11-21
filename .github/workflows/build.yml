@@ -17,6 +17,8 @@ jobs:
           cat << 'EOF' | awk 'BEGIN{a=0;b=0;}{b=0;if($0~/```/){b=1}if(a==1&&b==0){print($0)}if(b>0){++a}}' > main.wren
           ${{ github.event.issue.body }}
           EOF
+      - run: echo "::set-output name=value::$(head -c 1 main.wren)"
+        id: source
       - run: |
           curl -L -o wren.zip "https://github.com/wren-lang/wren-cli/releases/download/$VERSION/wren-cli-linux-$VERSION.zip"
           unzip wren.zip
@@ -24,6 +26,7 @@ jobs:
           chmod u+x wren_cli
           echo "::set-output name=value::$(./wren_cli main.wren)"
         id: result
+        if: ${{ steps.source.outputs.value }}
       - uses: actions/github-script@v5
         with:
           script: |
