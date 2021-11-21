@@ -22,3 +22,4 @@ jobs:
           unzip wren.zip
           mv "wren-cli-linux-$VERSION/wren_cli" ./
           chmod u+x wren_cli
+          ./wren_cli main.wren > result
