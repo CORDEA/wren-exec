@@ -24,7 +24,7 @@ jobs:
           unzip wren.zip
           mv "wren-cli-linux-$VERSION/wren_cli" ./
           chmod u+x wren_cli
-          echo "::set-output name=value::$(./wren_cli main.wren)"
+          echo "::set-output name=value::$(./wren_cli main.wren | awk '{printf("%s\\n",$0)}')"
         id: result
         if: ${{ steps.source.outputs.value }}
       - uses: actions/github-script@v5
